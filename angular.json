@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bytebank": {
+    "tour-of-heroes": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/bytebank",
+            "outputPath": "dist/tour-of-heroes",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -73,10 +73,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "bytebank:build:production"
+              "browserTarget": "tour-of-heroes:build:production"
             },
             "development": {
-              "browserTarget": "bytebank:build:development"
+              "browserTarget": "tour-of-heroes:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +85,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bytebank:build"
+            "browserTarget": "tour-of-heroes:build"
           }
         },
         "test": {
@@ -118,7 +119,7 @@
       }
     }
   },
-  "defaultProject": "bytebank",
+  "defaultProject": "tour-of-heroes",
   "cli": {
     "defaultCollection": "@angular-eslint/schematics"
   }

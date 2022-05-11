@@ -4,17 +4,33 @@
   <mat-icon>add</mat-icon>
 </button>
 
+<app-hero-search [label]="'hero to delete'" (selected)="onSelected($event)"></app-hero-search>
+
 <mat-table [dataSource]="heroes" class="mat-elevation-z8">
-  <!-- id -->
+  <!-- Id -->
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
     <mat-cell *matCellDef="let row"> {{ row.id }} </mat-cell>
   </ng-container>
 
-  <!-- name -->
+  <!-- Name -->
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
     <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
+  </ng-container>
+
+  <!-- Actions -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <button
+        mat-icon-button
+        matTooltip="Delete this item"
+        (click)="deleteHeroes(row); $event.stopPropagation()"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
   </ng-container>
 
   <!-- Header and Row Declarations -->

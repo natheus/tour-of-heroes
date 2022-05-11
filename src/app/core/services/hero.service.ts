@@ -26,32 +26,46 @@ export class HeroService {
   // GET /heroes/id
   getHero(id: number): Observable<Hero> {
     return this.http
-      .get<Hero>(`${this.heroesUrl}/${id}`)
+      .get<Hero>(this.getUrl(id))
+      .pipe(tap((hero) => this.log(`fetched ${this.descAttributes(hero)}`)));
+  }
+
+  // GET /heroes?name=term
+  searchHero(term: string): Observable<Hero[]> {
+    if (!term.trim()) {
+      return of([]);
+    }
+
+    return this.http
+      .get<Hero[]>(`${this.heroesUrl}?name=${term}`)
       .pipe(
-        tap((hero) => this.log(`fetched ${this.descAttributes(hero)}`))
+        tap((heroes) =>
+          heroes.length
+            ? this.log(`found ${heroes.length} hero(es) matching "${term}"`)
+            : this.log(`no heroes matching "${term}"`)
+        )
       );
   }
 
   // POST /heroes
   createHero(hero: Hero): Observable<Hero> {
     return this.http
-    .post<Hero>(this.heroesUrl, hero)
-    .pipe(
-      tap((hero) =>
-        this.log(`create ${this.descAttributes(hero)}`)
-      )
-    )
+      .post<Hero>(this.heroesUrl, hero)
+      .pipe(tap((hero) => this.log(`create ${this.descAttributes(hero)}`)));
   }
 
   // PUT /heroes/id
   updateHero(hero: Hero): Observable<Hero> {
     return this.http
-      .put<Hero>(`${this.heroesUrl}/${hero.id}`, hero)
-      .pipe(
-        tap((hero) =>
-          this.log(`updated ${this.descAttributes(hero)}`)
-        )
-      );
+      .put<Hero>(this.getUrl(hero.id), hero)
+      .pipe(tap((hero) => this.log(`updated ${this.descAttributes(hero)}`)));
+  }
+
+  // DELETE /heroes/id
+  deleteHero(hero: Hero): Observable<any> {
+    return this.http
+      .delete<any>(this.getUrl(hero.id))
+      .pipe(tap(() => this.log(`deleted ${this.descAttributes(hero)}`)));
   }
 
   private descAttributes(hero: Hero): string {
@@ -60,5 +74,9 @@ export class HeroService {
 
   private log(message: string): void {
     this.messageService.add(`HeroService: ${message}`);
+  }
+
+  private getUrl(id: number): string {
+    return `${this.heroesUrl}/${id}`;
   }
 }

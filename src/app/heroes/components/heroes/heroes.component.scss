@@ -8,3 +8,13 @@
   cursor: pointer;
   background-color: whitesmoke;
 }
+
+.mat-column-id {
+  max-width: 60px;
+}
+
+.mat-column-actions {
+  border-left: 1px solid whitesmoke;
+  max-width: 60px;
+  padding-left: 16px;
+}
